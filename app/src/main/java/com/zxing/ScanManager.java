@@ -292,7 +292,6 @@ public class ScanManager implements SurfaceHolder.Callback{
 				Bitmap bitmap= BitmapUtil.decodeBitmapFromPath(photo_path2, 600, 600);
 				RGBLuminanceSource source = new RGBLuminanceSource(bitmap);
 				BinaryBitmap bitmap1 = new BinaryBitmap(new HybridBinarizer(source));
-				QRCodeReader reader = new QRCodeReader();
 				MultiFormatReader multiFormatReader=new MultiFormatReader();
 				try {
 					Message msg= Message.obtain();

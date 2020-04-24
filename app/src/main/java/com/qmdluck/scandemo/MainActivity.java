@@ -3,6 +3,8 @@ package com.qmdluck.scandemo;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+import com.zxing.IdentifyBitmap;
 import com.zxing.activity.CommonScanActivity;
 
 public class MainActivity extends AppCompatActivity {
@@ -22,10 +25,34 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         tv_code = findViewById(R.id.tv_code);
+
+        findViewById(R.id.bt).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                resourcePic();
+            }
+        });
     }
 
     public void test(View view) {
         getCameraPic();
+    }
+
+    public void resourcePic() {
+
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ic_scan_code);
+
+        IdentifyBitmap.scanningImage(bitmap, new IdentifyBitmap.CallbackResult() {
+            @Override
+            public void callback(final String result) {
+                MainActivity.this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        tv_code.append(result+"\n");
+                    }
+                });
+            }
+        });
     }
 
 
